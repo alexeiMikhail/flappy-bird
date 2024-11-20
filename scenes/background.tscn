@@ -7,16 +7,23 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ba5se"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dhaw"]
-size = Vector2(500, 15)
+size = Vector2(500, 15.5)
 
 [node name="Background" type="Node2D"]
 script = ExtResource("1_eeftb")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_ba5se")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="FloorShape" type="CollisionShape2D" parent="Floor"]
 position = Vector2(250, 392.5)
+shape = SubResource("RectangleShape2D_4dhaw")
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ba5se")
+
+[node name="CeilingShape" type="CollisionShape2D" parent="Ceiling"]
+position = Vector2(250, -7.75)
 shape = SubResource("RectangleShape2D_4dhaw")
 
 [node name="Mountains" type="Parallax2D" parent="."]

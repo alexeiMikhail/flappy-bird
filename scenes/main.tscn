@@ -12,9 +12,6 @@ script = ExtResource("1_i3c1o")
 [node name="Background" parent="." instance=ExtResource("1_wvf81")]
 
 [node name="Bird" parent="." instance=ExtResource("2_y0qon")]
-gravity = 900.0
-jump_force = 300
-rotation_speed = 2
 
 [node name="HUD" parent="." instance=ExtResource("4_yggqg")]
 unique_name_in_owner = true
