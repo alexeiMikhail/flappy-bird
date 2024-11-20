@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6gcbvqe0et5b"]
+
+[ext_resource type="Script" path="res://background.gd" id="1_eeftb"]
+[ext_resource type="Texture2D" uid="uid://dmep77fqhvamj" path="res://flappy-50-assets/background.png" id="1_v1qep"]
+[ext_resource type="Texture2D" uid="uid://bl36mriitl2tm" path="res://flappy-50-assets/ground.png" id="2_8jdug"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ba5se"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4dhaw"]
+size = Vector2(500, 15)
+
+[node name="Background" type="Node2D"]
+script = ExtResource("1_eeftb")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ba5se")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(250, 392.5)
+shape = SubResource("RectangleShape2D_4dhaw")
+
+[node name="Mountains" type="Parallax2D" parent="."]
+unique_name_in_owner = true
+repeat_size = Vector2(500, 400)
+autoscroll = Vector2(-40, 0)
+ignore_camera_scroll = true
+
+[node name="Background" type="Sprite2D" parent="Mountains"]
+position = Vector2(0, 4.57764e-05)
+scale = Vector2(1.21824, 1.38889)
+texture = ExtResource("1_v1qep")
+centered = false
+
+[node name="Ground" type="Parallax2D" parent="."]
+repeat_size = Vector2(500, 400)
+autoscroll = Vector2(-80, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+position = Vector2(0, 384)
+texture = ExtResource("2_8jdug")
+centered = false

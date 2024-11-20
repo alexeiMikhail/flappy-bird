@@ -1,0 +1,141 @@
+[gd_scene load_steps=16 format=3 uid="uid://dtmgjyvd1xofr"]
+
+[ext_resource type="Script" path="res://scripts/bird.gd" id="1_w3ugc"]
+[ext_resource type="Texture2D" uid="uid://dmtmkdiwe4m2h" path="res://assets/art/art.png" id="2_cup75"]
+[ext_resource type="Texture2D" uid="uid://7243ag3v2hdu" path="res://assets/art/b928d5c3-5d08-4dbd-9bcb-fd2f9f12dd1d.jpeg" id="2_yxf8f"]
+[ext_resource type="AudioStream" uid="uid://b8ye04ujip5uu" path="res://flappy-50-assets/jump.wav" id="3_ab3dk"]
+[ext_resource type="Texture2D" uid="uid://ysb6mdg5f0h2" path="res://assets/art/7f2485cb-5212-404f-8356-9dd583572026.jpeg" id="3_dj3rj"]
+[ext_resource type="Texture2D" uid="uid://bs5p3itr6jrqu" path="res://assets/art/4027666f-f640-4995-9bd4-82f15ed09b25.jpeg" id="4_htow0"]
+[ext_resource type="AudioStream" uid="uid://bi4ylalr74o0m" path="res://flappy-50-assets/hurt.wav" id="4_j6tiu"]
+[ext_resource type="AudioStream" uid="uid://cdycycsln35aj" path="res://flappy-50-assets/explosion.wav" id="5_ubm03"]
+[ext_resource type="Texture2D" uid="uid://cdtqi5bb2b8ee" path="res://assets/art/yellowbird-midflap.png" id="6_b3oud"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c8p1s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yxf8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dj3rj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_yxf8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_htow0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_kmqwi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_pivw1"]
+resource_name = "falling"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_set7t"]
+resource_name = "flying"
+length = 1.2
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_njqrc"]
+_data = {
+"RESET": SubResource("Animation_kmqwi"),
+"falling": SubResource("Animation_pivw1"),
+"flying": SubResource("Animation_set7t")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sx0my"]
+height = 24.0
+
+[node name="Bird" type="CharacterBody2D"]
+z_index = 1
+position = Vector2(100, 100)
+motion_mode = 1
+script = ExtResource("1_w3ugc")
+
+[node name="Dildo" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_c8p1s")
+frame = 3
+frame_progress = 0.417627
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../BirdSprite")
+libraries = {
+"": SubResource("AnimationLibrary_njqrc")
+}
+
+[node name="BirdSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_cup75")
+hframes = 3
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_sx0my")
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ab3dk")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_j6tiu")
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ubm03")
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 12
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource("6_b3oud")
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 500.0
+angular_velocity_max = 720.0
+linear_accel_min = -100.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
